@@ -1,24 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef, useEffect } from 'react';
+import { clearCanvas, setCanvasSize } from "./utils/canvasUtils"
+
+const WIDTH = 1024
+const HEIGHT = 768
 
 function App() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  const getCanvasWithContext = (canvas = canvasRef.current) => {
+    return { canvas, context: canvas?.getContext("2d") }
+  }
+
+  useEffect(() => {
+    const { canvas, context } = getCanvasWithContext()
+    if (!canvas || !context) {
+      return
+    }
+
+    setCanvasSize(canvas, WIDTH, HEIGHT)
+
+    context.lineJoin = "round"
+    context.lineCap = "round"
+    context.lineWidth = 5
+    context.strokeStyle = "black"
+
+    clearCanvas(canvas)
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="window">
+      <div className="title-bar">
+        <div className="title-bar-text">Redux Paint</div>
+        <div className="title-bar-controls">
+          <button aria-label="Close" />
+        </div>
+      </div>
+      <canvas ref={canvasRef} />
     </div>
   );
 }
