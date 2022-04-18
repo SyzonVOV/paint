@@ -6,5 +6,5 @@ body {
 canvas {
   transform: translate3d(-50%, 0, 0);
   cursor: url(./icons/pencil.png) 0 34, auto;
-  margin: 10px 50%;
+  margin: 100px 50%;
 }

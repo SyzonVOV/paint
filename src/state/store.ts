@@ -7,5 +7,3 @@ export const store = createStore(
    rootReducer,
    composeWithDevTools(applyMiddleware(logger))
    )
-
-   store.dispatch({type: "TEST_ACTION"})
