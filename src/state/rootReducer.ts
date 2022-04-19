@@ -1,9 +1,10 @@
 import { RootState } from '../utils/types'
-import { Action, BEGIN_STROKE, END_STROKE, SET_STROKE_COLOR, UPDATE_STROKE } from './actions'
+import { Action, BEGIN_STROKE, END_STROKE, REDO, SET_STROKE_COLOR, UNDO, UPDATE_STROKE } from './actions'
 
 const initialState: RootState = {
   currentStroke: { points: [], color: "#" },
-  strokes: []
+  strokes: [],
+  historyIndex: 0
 }
 
 export const rootReducer = (
@@ -35,10 +36,12 @@ export const rootReducer = (
       if (!state.currentStroke.points.length) {
         return state
       }
+      const historyIndex = state.strokes.length - state.historyIndex
       return {
         ...state,
+        historyIndex: 0,
         currentStroke: { ...state.currentStroke, points: [] },
-        strokes: [...state.strokes, state.currentStroke]
+        strokes: [...state.strokes.slice(0, historyIndex), state.currentStroke]
       }
     }
 
@@ -52,9 +55,23 @@ export const rootReducer = (
       }
     }
 
+    case UNDO: {
+      const historyIndex = Math.min(
+        state.historyIndex + 1,
+        state.strokes.length
+      )
+      return { ...state, historyIndex }
+    }
+    case REDO: {
+      const historyIndex = Math.max(state.historyIndex - 1, 0)
+      return { ...state, historyIndex }
+    }
+
     default:
       return state
   }
 }
 
 export const currentStrokeSelector = (state: RootState) => state.currentStroke
+export const historyIndexSelector = (state: RootState) => state.historyIndex
+export const strokesSelector = (state: RootState) => state.strokes
