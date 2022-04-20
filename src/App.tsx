@@ -1,8 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
+import { useCanvas } from "./CanvasContext"
 import { drawStroke, clearCanvas, setCanvasSize } from "./utils/canvasUtils"
+
 import { ColorPanel } from './shared/ColorPanel';
 import { EditPanel } from './shared/EditPanel';
+import { FilePanel } from "./shared/FilePanel"
+
 import { currentStrokeSelector } from './modules/currentStroke/reducer';
 import { historyIndexSelector } from './modules/historyIndex/reducer';
 import { strokesSelector } from './modules/strokes/reducer';
@@ -12,7 +16,7 @@ const WIDTH = 1024
 const HEIGHT = 768
 
 function App() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasRef = useCanvas()
 
   const getCanvasWithContext = (canvas = canvasRef.current) => {
     return { canvas, context: canvas?.getContext("2d") }
@@ -91,7 +95,7 @@ function App() {
 
     dispatch(updateStroke(offsetX, offsetY))
   }
-
+// todo: change styles for EditPanel and ControlPanel
   return (
     <div className="window">
       <div className="title-bar">
@@ -102,6 +106,7 @@ function App() {
       </div>
       <EditPanel />
       <ColorPanel />
+      <FilePanel />
       <canvas
         onMouseDown={startDrawing}
         onMouseUp={endDrawing}

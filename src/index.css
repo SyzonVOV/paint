@@ -39,3 +39,10 @@ canvas {
   left: 30%;
   z-index: 10;
 }
+
+.file {
+  position: fixed;
+  bottom: 40px;
+  right: 20%;
+  z-index: 10;
+}
