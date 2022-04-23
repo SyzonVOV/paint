@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { redo, undo } from '../modules/historyIndex/actions'
+import { redo, undo } from '../modules/historyIndex/reducer'
 import { strokesLengthSelector } from "../modules/strokes/reducer"
 
 
