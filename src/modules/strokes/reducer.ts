@@ -1,24 +1,19 @@
+import { createReducer } from "@reduxjs/toolkit"
 import { RootState } from '../../utils/types'
-import { Action, END_STROKE } from './actions'
+import { endStroke } from '../sharedActions'
 
-export const reducer = (
-  state: RootState["strokes"] = [],
-  action: Action
-) => {
-  switch (action.type) {
+const initialStrokes: RootState["strokes"] = []
 
-    case END_STROKE: {
-      const { historyIndex, stroke } = action.payload
-      if (!stroke.points.length) {
-        return state
-      }
-      return [...state.slice(0, state.length - historyIndex), stroke]
+export const reducer = createReducer(initialStrokes, (builder) => {
+  builder.addCase(endStroke, (state, action) => {
+    const { historyIndex, stroke } = action.payload
+    if (historyIndex === 0) {
+      state.push(stroke)
+    } else {
+      state.splice(-historyIndex, historyIndex, stroke)
     }
-
-    default:
-      return state
-  }
-}
+  })
+})
 
 export const strokesSelector = (state: RootState) => state.strokes
 

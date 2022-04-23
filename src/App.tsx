@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useCanvas } from "./CanvasContext"
 import { drawStroke, clearCanvas, setCanvasSize } from "./utils/canvasUtils"
@@ -10,7 +10,8 @@ import { FilePanel } from "./shared/FilePanel"
 import { currentStrokeSelector } from './modules/currentStroke/reducer';
 import { historyIndexSelector } from './modules/historyIndex/reducer';
 import { strokesSelector } from './modules/strokes/reducer';
-import { beginStroke, endStroke, updateStroke } from './modules/currentStroke/actions';
+import { beginStroke, updateStroke } from './modules/currentStroke/actions';
+import { endStroke } from './modules/sharedActions';
 
 const WIDTH = 1024
 const HEIGHT = 768
@@ -76,12 +77,12 @@ function App() {
     console.log(ev);
 
     const { offsetX, offsetY } = ev.nativeEvent
-    dispatch(beginStroke(offsetX, offsetY))
+    dispatch(beginStroke({x: offsetX, y: offsetY}))
   }
 
   const endDrawing = () => {
     if (isDrawing) {
-      dispatch(endStroke(historyIndex, currentStroke))
+      dispatch(endStroke({ historyIndex, stroke: currentStroke }))
     }
   }
 
@@ -93,7 +94,7 @@ function App() {
     }
     const { offsetX, offsetY } = nativeEvent
 
-    dispatch(updateStroke(offsetX, offsetY))
+    dispatch(updateStroke({ x: offsetX, y: offsetY }))
   }
 // todo: change styles for EditPanel and ControlPanel
   return (
