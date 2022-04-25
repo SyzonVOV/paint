@@ -11,6 +11,7 @@ import { endStroke } from './modules/sharedActions';
 import { beginStroke, currentStrokeSelector, updateStroke } from './modules/currentStroke/reducer';
 import { historyIndexSelector } from './modules/historyIndex/reducer';
 import { strokesSelector } from './modules/strokes/reducer';
+import { ModalLayer } from './ModalLayer';
 
 const WIDTH = 1024
 const HEIGHT = 768
@@ -107,6 +108,7 @@ function App() {
       <EditPanel />
       <ColorPanel />
       <FilePanel />
+      <ModalLayer />
       <canvas
         onMouseDown={startDrawing}
         onMouseUp={endDrawing}
