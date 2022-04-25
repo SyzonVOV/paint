@@ -7,11 +7,10 @@ import { ColorPanel } from './shared/ColorPanel';
 import { EditPanel } from './shared/EditPanel';
 import { FilePanel } from "./shared/FilePanel"
 
-import { currentStrokeSelector } from './modules/currentStroke/reducer';
+import { endStroke } from './modules/sharedActions';
+import { beginStroke, currentStrokeSelector, updateStroke } from './modules/currentStroke/reducer';
 import { historyIndexSelector } from './modules/historyIndex/reducer';
 import { strokesSelector } from './modules/strokes/reducer';
-import { beginStroke, updateStroke } from './modules/currentStroke/actions';
-import { endStroke } from './modules/sharedActions';
 
 const WIDTH = 1024
 const HEIGHT = 768

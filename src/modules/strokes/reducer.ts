@@ -1,19 +1,26 @@
-import { createReducer } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from '../../utils/types'
 import { endStroke } from '../sharedActions'
 
-const initialStrokes: RootState["strokes"] = []
+const initialState: RootState["strokes"] = []
 
-export const reducer = createReducer(initialStrokes, (builder) => {
-  builder.addCase(endStroke, (state, action) => {
-    const { historyIndex, stroke } = action.payload
-    if (historyIndex === 0) {
-      state.push(stroke)
-    } else {
-      state.splice(-historyIndex, historyIndex, stroke)
-    }
-  })
+const strokes = createSlice({
+  name: "strokes",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(endStroke, (state, action) => {
+      const { historyIndex, stroke } = action.payload
+      if (historyIndex === 0) {
+        state.push(stroke)
+      } else {
+        state.splice(-historyIndex, historyIndex, stroke)
+      }
+    })
+  }
 })
+
+export default strokes.reducer
 
 export const strokesSelector = (state: RootState) => state.strokes
 
