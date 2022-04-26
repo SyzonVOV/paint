@@ -5,15 +5,18 @@ import historyIndex from "../modules/historyIndex/reducer"
 import { currentStroke } from "../modules/currentStroke/reducer"
 import strokes from "../modules/strokes/reducer"
 import { modalVisible } from "../modules/modals/slice"
+import { projectsList } from "../modules/projectsList/slice"
 
 import { RootState } from "../utils/types"
+import { useDispatch } from 'react-redux'
 
 export const store = configureStore({
    reducer: {
       historyIndex,
       currentStroke,
       strokes,
-      modalVisible
+      modalVisible,
+      projectsList
    },
    middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(logger)
@@ -27,3 +30,5 @@ export type AppThunk = ThunkAction<
 >
 
 export type AppDispatch = typeof store.dispatch;
+
+export const useAppDispatch = () => useDispatch<AppDispatch>()

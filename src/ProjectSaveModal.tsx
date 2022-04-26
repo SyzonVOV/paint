@@ -1,9 +1,8 @@
 import { ChangeEvent, useState } from 'react'
-import { useDispatch } from "react-redux"
 import { useCanvas } from './CanvasContext'
 import { hide } from "./modules/modals/slice"
 import { saveProject } from './modules/strokes/reducer'
-import { AppDispatch } from './state/store'
+import { useAppDispatch } from './state/store'
 import { getCanvasImage } from './utils/canvasUtils'
 import { getBase64Thumbnail } from './utils/scaler'
 
@@ -11,7 +10,7 @@ export const ProjectSaveModal = () => {
   const [projectName, setProjectName] = useState("")
 
   const canvasRef = useCanvas()
-  const dispatch: AppDispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const onProjectNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setProjectName(e.target.value)

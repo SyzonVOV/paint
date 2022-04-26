@@ -54,3 +54,29 @@ canvas {
   transform: translate3d(-50%, -50%, 0);
   z-index: 10;
 }
+
+.projects-container {
+  overflow: auto;
+  max-width: 600px;
+  height: 400px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0 10px;
+  width: 600px;
+}
+
+.project-card {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.project-card img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
