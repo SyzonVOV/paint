@@ -36,9 +36,10 @@ interface Point {
 const app = express()
 
 app.use(cors())
+app.use(express.static('build'));
 app.use(bodyParser.json())
 
-const port = 4000
+const PORT = process.env.PORT || 4000
 
 app.get("/projects", (req, res) => {
   const data = db.get("projects").value()
@@ -73,6 +74,6 @@ app.get("/projects/:projectId", (req, res) => {
   }
 })
 
-app.listen(port, () =>
-  console.log(`Backend running on http://localhost:${port}!`)
+app.listen(PORT, () =>
+  console.log(`Backend running on http://localhost:${PORT}!`)
 )
